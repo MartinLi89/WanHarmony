@@ -1,4 +1,8 @@
+import PageMine from './minepages/PageMine'
+
 const tabBarHeight: number = 60
+
+AppStorage.setOrCreate("mLoginStatus", false);
 
 interface HomeItemInterface {
 
@@ -9,12 +13,11 @@ interface HomeItemInterface {
 
 export class HomeItem implements HomeItemInterface {
   mName = ""
-  mRes = $r("app.media.mine")
+  mRes: ResourceStr = $r("app.media.mine")
 
-  constructor(flags: HomeItem) {
+  constructor(flags: HomeItemInterface) {
     this.mName = flags.mName
     this.mRes = flags.mRes
-
   }
 }
 
@@ -22,20 +25,17 @@ export class HomeItem implements HomeItemInterface {
 @Entry
 @Component
 struct Index {
-  @State currentIndex: number = 2
-  private controller: TabsController = new TabsController()
+  @State mCurrentIndex: number = 4
+  @StorageLink("mLoginStatus") mLoginStatus: boolean =false
+
+  private mController: TabsController = new TabsController()
   private mHomeList: Array<HomeItemInterface> = [
     { mName: "首页", mRes: $r("app.media.home") } as HomeItemInterface,
-    { mName: "体系", mRes: $r("app.media.frame") } as HomeItemInterface,
+    { mName: "知识体系", mRes: $r("app.media.frame") } as HomeItemInterface,
     { mName: "导航", mRes: $r("app.media.navigation") } as HomeItemInterface,
     { mName: "项目", mRes: $r("app.media.progress") } as HomeItemInterface,
-    { mName: "我的", mRes: $r("app.media.mine") } as HomeItemInterface,
+    { mName: "我的", mRes: $r("app.media.mine") } as HomeItemInterface
   ]
-
-  aboutToAppear(): void {
-
-
-  }
 
   @Builder
   tabBuilder(title: string, tabUrl: ResourceStr, targetIndex: number) {
@@ -47,10 +47,10 @@ struct Index {
           width: 28,
           height: 28
         })
-        .fillColor(this.currentIndex === targetIndex ? $r("app.color.main") : $r("app.color.navi_tab_unselect"))
+        .fillColor(this.mCurrentIndex === targetIndex ? $r("app.color.main") : $r("app.color.navi_tab_unselect"))
 
       Text(title)
-        .fontColor(this.currentIndex === targetIndex ? '#1698CE' : '#6B6B6B')
+        .fontColor(this.mCurrentIndex === targetIndex ? '#1698CE' : '#6B6B6B')
         .fontSize(11)
         .margin({ top: 6 })
 
@@ -92,18 +92,15 @@ struct Index {
     } else if (index === 3) {
       Column() {
         Text('项目的内容')
-      }.width('100%')
+
+      }
+      .width('100%')
       .height('100%')
       .backgroundColor('#E67C92')
       .justifyContent(FlexAlign.Center)
 
     } else if (index === 4) {
-      Column() {
-        Text('我的内容')
-      }.width('100%')
-      .height('100%')
-      .backgroundColor('#E67C92')
-      .justifyContent(FlexAlign.Center)
+      PageMine()
 
     }
 
@@ -112,7 +109,8 @@ struct Index {
 
   build() {
     Column() {
-      Tabs({ barPosition: BarPosition.End, controller: this.controller, index: $$this.currentIndex }) {
+      //layout + 底部tabbarUI
+      Tabs({ barPosition: BarPosition.End, index: $$this.mCurrentIndex, controller: this.mController }) {
 
         ForEach(this.mHomeList, (item: HomeItemInterface, index: number) => {
           TabContent() {
@@ -126,7 +124,7 @@ struct Index {
       .barHeight(tabBarHeight)
       .animationDuration(0)
       .onChange((index: number) => {
-        this.currentIndex = index
+        this.mCurrentIndex = index
       })
       .width("100%")
       .height("100%")
