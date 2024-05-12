@@ -24,9 +24,9 @@ class BannerBean {
 /**
  * 首页文章列表
  */
-class HomeArticleList {
+class ArticleListBean {
   curPage?: number
-  datas: Pager[] = []
+  datas: Array<Pager> = []
   offset?: number
   over?: boolean
   pageCount?: number
@@ -114,10 +114,13 @@ class Navi {
 }
 
 
+
 class Tag {
   tag: string = ""
+  url: string=""
+
 }
 
 export {
-  CommontRequest, BannerBean, Tag, Pager, HomeArticleList, Tree,Navi
+  CommontRequest, BannerBean, Tag, Pager,ArticleListBean, Tree,Navi
 }

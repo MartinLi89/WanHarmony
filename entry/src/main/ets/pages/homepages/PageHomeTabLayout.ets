@@ -1,6 +1,6 @@
 import NetworkApi from '../../networks/NetworkApi';
 import Logger from '../../utils/Logger';
-import { BannerBean, HomeArticleList, Pager } from './Beans';
+import { BannerBean, ArticleListBean, Pager } from './Beans';
 import { promptAction, router } from '@kit.ArkUI';
 
 @Preview

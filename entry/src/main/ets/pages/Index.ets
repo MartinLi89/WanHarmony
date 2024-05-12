@@ -1,6 +1,7 @@
 import PageHomeTabLayout from './homepages/PageHomeTabLayout';
 import PageMine from './minepages/PageMine'
 import { PageNavi } from './navipages/PageNavi';
+import { PageProject } from './projectspages/PageProject';
 import { PageFrameTree } from './treepages/PageFrameTree';
 
 const tabBarHeight: number = 60
@@ -28,9 +29,8 @@ export class HomeItem implements HomeItemInterface {
 @Entry
 @Component
 struct Index {
-  @State mCurrentIndex: number = 2
-  @StorageLink("mLoginStatus") mLoginStatus: boolean =false
-
+  @State mCurrentIndex: number = 3
+  @StorageLink("mLoginStatus") mLoginStatus: boolean = false
   private mController: TabsController = new TabsController()
   private mHomeList: Array<HomeItemInterface> = [
     { mName: "首页", mRes: $r("app.media.home") } as HomeItemInterface,
@@ -67,30 +67,15 @@ struct Index {
   @Builder
   tabContentBuilder(index: number) {
     if (index === 0) {
-
-
-
       PageHomeTabLayout()
-
-
     } else if (index === 1) {
       PageFrameTree()
     } else if (index === 2) {
       PageNavi()
-
     } else if (index === 3) {
-      Column() {
-        Text('项目的内容')
-
-      }
-      .width('100%')
-      .height('100%')
-      .backgroundColor('#E67C92')
-      .justifyContent(FlexAlign.Center)
-
+      PageProject()
     } else if (index === 4) {
       PageMine()
-
     }
 
 

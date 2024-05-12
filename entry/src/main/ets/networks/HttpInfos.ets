@@ -51,6 +51,7 @@ export default class HttpInfos {
 
   static readonly TREE: string = this.SERVER+ "/tree/json"
   static readonly NAVI: string = this.SERVER+ "/navi/json"
+  static readonly FRASH_PROJECTS: string = this.SERVER+ "/article/listproject/0/json"
   /**
    * 成功code
    */

@@ -1,5 +1,5 @@
 import { http } from '@kit.NetworkKit'
-import { BannerBean, CommontRequest, HomeArticleList, Navi, Pager, Tree } from '../pages/homepages/Beans'
+import { BannerBean, CommontRequest, ArticleListBean, Navi, Pager, Tree } from '../pages/homepages/Beans'
 import Logger from '../utils/Logger'
 import HttpInfos from './HttpInfos'
 import { hilog } from '@kit.PerformanceAnalysisKit'
@@ -93,7 +93,7 @@ class NetworkApi {
         if (response) {
 
 
-          let resultBean: CommontRequest<HomeArticleList> = JSON.parse((response.result as string))
+          let resultBean: CommontRequest<ArticleListBean> = JSON.parse((response.result as string))
 
           let result: Pager[] = filterBean(resultBean)
           resolve(result)
@@ -159,27 +159,41 @@ class NetworkApi {
     })
   }
 
+  async getFrashProject() {
+    return new Promise<Array<Pager>>((resolve, reject) => {
 
+      let request = http.createHttp();
+      let options = {
+        method: http.RequestMethod.GET,
+        header: { 'Content-Type': 'application/json' },
+        readTimeout: HttpInfos.READ_TIMEOUT,
+        connectTimeout: HttpInfos.CONNECT_TIMEOUT
+      } as http.HttpRequestOptions;
 
+      let urlss: string = HttpInfos.FRASH_PROJECTS
+
+      request.request(urlss, options, (error, response) => {
+        if (response) {
+
+          let resultBean: CommontRequest<ArticleListBean> = JSON.parse((response.result as string))
+
+          let result: Array<Pager> = filterBean(resultBean)
+          resolve(result)
+        }
+        if (error) {
+          reject(error)
+        }
+      })
+    })
+  }
 }
 
 
-export default NetworkApi
-
-function filterBean(resultBean: CommontRequest<HomeArticleList>): Pager[] {
-  let homeArticles: HomeArticleList = resultBean.data as HomeArticleList
-
-  // Logger.info("resultttt", "filterBean result==>" )
-  // Logger.info("resultttt", "filterBean result==>" + JSON.stringify(resultBean))
-
-
-  hilog.info(0xFF00, "lsyyy", '%{public}s', JSON.stringify(resultBean));
-
+function filterBean(resultBean: CommontRequest<ArticleListBean>): Pager[] {
+  let homeArticles: ArticleListBean = resultBean.data as ArticleListBean
   let papers: Pager[] = homeArticles.datas
-
-  // let papers: Pager[] =article.datas
-  // let title: string = papers[0].title as string
-  Logger.info("resultttt", "filterBean result==>" + papers[0].title)
 
   return papers
 }
+
+export default NetworkApi
