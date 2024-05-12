@@ -1,6 +1,7 @@
 {
   "src": [
     "pages/Index",
-    "pages/minepages/PageLoginAccount"
+    "pages/minepages/PageLoginAccount",
+    "pages/PageArticalDetail"
   ]
 }

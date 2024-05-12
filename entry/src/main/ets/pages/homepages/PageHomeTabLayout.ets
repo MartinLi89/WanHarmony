@@ -1,7 +1,7 @@
 import NetworkApi from '../../networks/NetworkApi';
 import Logger from '../../utils/Logger';
 import { BannerBean, HomeArticleList, Pager } from './Beans';
-import { promptAction } from '@kit.ArkUI';
+import { promptAction, router } from '@kit.ArkUI';
 
 @Preview
 @Component
@@ -34,9 +34,15 @@ export default struct PageHomeTabLayout {
     }
     .width("100%")
     .height(60)
-    .onClick(()=>{
-      promptAction.showToast({ message: item.link })
+    .onClick(() => {
 
+      router.pushUrl({
+        url: "pages/PageArticalDetail",
+        params: {
+          linkUrl:item.link
+
+        }
+      })
     })
 
   }
