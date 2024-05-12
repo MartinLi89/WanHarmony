@@ -75,7 +75,7 @@ class Pager {
   visible?: number
   zan?: number
 
-  public  getDataTime(): string {
+  public getDataTime(): string {
 
     let time: Date
     if (this.publishTime) {
@@ -89,7 +89,7 @@ class Pager {
   }
 }
 
- class Tree {
+class Tree {
   articleList?: Array<Pager>
   author?: string
   children?: Array<Tree>
@@ -107,11 +107,17 @@ class Pager {
   visible?: number
 }
 
+class Navi {
+  articles?: Array<Pager>
+  cid?: number
+  name?: string
+}
+
 
 class Tag {
   tag: string = ""
 }
 
 export {
-  CommontRequest, BannerBean, Tag, Pager, HomeArticleList,Tree
+  CommontRequest, BannerBean, Tag, Pager, HomeArticleList, Tree,Navi
 }

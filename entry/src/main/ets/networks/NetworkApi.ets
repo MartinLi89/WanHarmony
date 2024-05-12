@@ -1,5 +1,5 @@
 import { http } from '@kit.NetworkKit'
-import { BannerBean, CommontRequest, HomeArticleList, Pager, Tree } from '../pages/homepages/Beans'
+import { BannerBean, CommontRequest, HomeArticleList, Navi, Pager, Tree } from '../pages/homepages/Beans'
 import Logger from '../utils/Logger'
 import HttpInfos from './HttpInfos'
 import { hilog } from '@kit.PerformanceAnalysisKit'
@@ -87,12 +87,11 @@ class NetworkApi {
         readTimeout: HttpInfos.READ_TIMEOUT,
         connectTimeout: HttpInfos.CONNECT_TIMEOUT
       } as http.HttpRequestOptions;
-      let urlss: string = HttpInfos.article
+      let urlss: string = HttpInfos.ARTICLE
 
       request.request(urlss, options, (error, response) => {
         if (response) {
 
-          console.log("lsyyy response 0002result header ==>" + JSON.stringify(response.header))
 
           let resultBean: CommontRequest<HomeArticleList> = JSON.parse((response.result as string))
 
@@ -107,10 +106,34 @@ class NetworkApi {
     })
   }
 
+  async getTree() {
+    return new Promise<Array<Tree>>((resolve, reject) => {
+      let request = http.createHttp();
+      let options = {
+        method: http.RequestMethod.GET,
+        header: { 'Content-Type': 'application/json' },
+        readTimeout: HttpInfos.READ_TIMEOUT,
+        connectTimeout: HttpInfos.CONNECT_TIMEOUT
+      } as http.HttpRequestOptions;
+      let urlss: string = HttpInfos.TREE
 
-  async getTree(){
-    return new Promise< Array<Tree>>((resolve, reject)=>{
+      request.request(urlss, options, (error, response) => {
+        if (response) {
 
+          let resultBean: CommontRequest<Array<Tree>> = JSON.parse((response.result as string))
+
+          let result: Array<Tree> = resultBean.data as Array<Tree>
+          resolve(result)
+        }
+        if (error) {
+          reject(error)
+        }
+      })
+    })
+  }
+
+  async getNavi() {
+    return new Promise<Array<Navi>>((resolve, reject) => {
 
       let request = http.createHttp();
       let options = {
@@ -119,29 +142,24 @@ class NetworkApi {
         readTimeout: HttpInfos.READ_TIMEOUT,
         connectTimeout: HttpInfos.CONNECT_TIMEOUT
       } as http.HttpRequestOptions;
-      let urlss: string = HttpInfos.tree
+      let urlss: string = HttpInfos.NAVI
 
       request.request(urlss, options, (error, response) => {
         if (response) {
 
-          console.log("lsyyy response 0002result header ==>" + JSON.stringify(response.header))
+          let resultBean: CommontRequest<Array<Navi>> = JSON.parse((response.result as string))
 
-          let resultBean: CommontRequest< Array<Tree>> = JSON.parse((response.result as string))
-
-          let result:  Array<Tree> = resultBean.data as Array<Tree>
+          let result: Array<Tree> = resultBean.data as Array<Navi>
           resolve(result)
         }
         if (error) {
           reject(error)
         }
-
       })
-
     })
-
-
-
   }
+
+
 
 }
 

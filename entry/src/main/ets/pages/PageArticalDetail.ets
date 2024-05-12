@@ -1,17 +1,24 @@
 import { webview } from '@kit.ArkWeb';
 import { CommonTitle } from './commons/PageCommonView';
 import { promptAction, router } from '@kit.ArkUI';
-import Logger from '../utils/Logger';
+
 
 @Entry
 @Component
 struct PageArticalDetail {
   linkUrl: string = 'www.example.com';
+  mTitle: string = '详情页';
   webviewController: webview.WebviewController = new webview.WebviewController();
 
   aboutToAppear(): void {
     let params: object = router.getParams()
     let url: string = params['linkUrl']
+    let title: string = params['title']
+    if (title) {
+      this.mTitle = title
+
+
+    }
 
     this.linkUrl = url
 
@@ -25,7 +32,7 @@ struct PageArticalDetail {
 
     Column() {
 
-      CommonTitle()
+      CommonTitle({mTitle:this.mTitle})
       // 组件创建时，加载www.example.com
       Web({ src: this.linkUrl, controller: this.webviewController })
 

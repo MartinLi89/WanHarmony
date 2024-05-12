@@ -47,9 +47,10 @@ export default class HttpInfos {
   static readonly BANNER: string = this.SERVER+ "/banner/json"
 
 
-  static readonly article: string = this.SERVER+ "/article/list/0/json"
+  static readonly ARTICLE: string = this.SERVER+ "/article/list/0/json"
 
-  static readonly tree: string = this.SERVER+ "/tree/json"
+  static readonly TREE: string = this.SERVER+ "/tree/json"
+  static readonly NAVI: string = this.SERVER+ "/navi/json"
   /**
    * 成功code
    */
