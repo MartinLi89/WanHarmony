@@ -1,4 +1,4 @@
-import { promptAction, router } from '@kit.ArkUI';
+import { router } from '@kit.ArkUI';
 
 @Preview
 @Component
@@ -15,18 +15,11 @@ export default struct PageMine {
   login() {
 
     if (this.mLoginStatus) {
-      // this.mLoginStatus = !this.mLoginStatus
-
       this.mLoginStatus = false
-
-
     } else {
-      // this.mLoginStatus = !this.mLoginStatus
-
       router.pushUrl({
         url: 'pages/minepages/PageLoginAccount'  // 一定是个Page
       })
-
     }
 
   }

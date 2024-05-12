@@ -1,3 +1,4 @@
+import PageHomeTabLayout from './homepages/PageHomeTabLayout';
 import PageMine from './minepages/PageMine'
 
 const tabBarHeight: number = 60
@@ -25,7 +26,7 @@ export class HomeItem implements HomeItemInterface {
 @Entry
 @Component
 struct Index {
-  @State mCurrentIndex: number = 4
+  @State mCurrentIndex: number = 0
   @StorageLink("mLoginStatus") mLoginStatus: boolean =false
 
   private mController: TabsController = new TabsController()
@@ -65,13 +66,11 @@ struct Index {
   tabContentBuilder(index: number) {
     if (index === 0) {
 
-      Column() {
-        Text('首页的内容')
-      }
-      .width('100%')
-      .height('100%')
-      .backgroundColor('#00CB87')
-      .justifyContent(FlexAlign.Center)
+
+
+      PageHomeTabLayout()
+
+
     } else if (index === 1) {
 
       Column() {
