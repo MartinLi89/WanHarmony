@@ -89,10 +89,29 @@ class Pager {
   }
 }
 
+ class Tree {
+  articleList?: Array<Pager>
+  author?: string
+  children?: Array<Tree>
+  courseId?: number
+  cover?: string
+  desc?: string
+  id?: number
+  lisense?: string
+  lisenseLink?: string
+  name?: string
+  order?: number
+  parentChapterId?: number
+  type?: number
+  userControlSetTop?: boolean
+  visible?: number
+}
+
+
 class Tag {
   tag: string = ""
 }
 
 export {
-  CommontRequest, BannerBean, Tag, Pager, HomeArticleList
+  CommontRequest, BannerBean, Tag, Pager, HomeArticleList,Tree
 }

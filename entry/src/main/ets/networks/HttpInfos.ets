@@ -48,6 +48,8 @@ export default class HttpInfos {
 
 
   static readonly article: string = this.SERVER+ "/article/list/0/json"
+
+  static readonly tree: string = this.SERVER+ "/tree/json"
   /**
    * 成功code
    */

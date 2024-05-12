@@ -1,5 +1,5 @@
 import { http } from '@kit.NetworkKit'
-import { BannerBean, CommontRequest, HomeArticleList, Pager } from '../pages/homepages/Beans'
+import { BannerBean, CommontRequest, HomeArticleList, Pager, Tree } from '../pages/homepages/Beans'
 import Logger from '../utils/Logger'
 import HttpInfos from './HttpInfos'
 import { hilog } from '@kit.PerformanceAnalysisKit'
@@ -106,6 +106,43 @@ class NetworkApi {
       })
     })
   }
+
+
+  async getTree(){
+    return new Promise< Array<Tree>>((resolve, reject)=>{
+
+
+      let request = http.createHttp();
+      let options = {
+        method: http.RequestMethod.GET,
+        header: { 'Content-Type': 'application/json' },
+        readTimeout: HttpInfos.READ_TIMEOUT,
+        connectTimeout: HttpInfos.CONNECT_TIMEOUT
+      } as http.HttpRequestOptions;
+      let urlss: string = HttpInfos.tree
+
+      request.request(urlss, options, (error, response) => {
+        if (response) {
+
+          console.log("lsyyy response 0002result header ==>" + JSON.stringify(response.header))
+
+          let resultBean: CommontRequest< Array<Tree>> = JSON.parse((response.result as string))
+
+          let result:  Array<Tree> = resultBean.data as Array<Tree>
+          resolve(result)
+        }
+        if (error) {
+          reject(error)
+        }
+
+      })
+
+    })
+
+
+
+  }
+
 }
 
 
