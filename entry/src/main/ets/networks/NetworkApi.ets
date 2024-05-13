@@ -2,7 +2,7 @@ import { http } from '@kit.NetworkKit'
 import { BannerBean, CommontRequest, ArticleListBean, Navi, Pager, Tree } from '../pages/homepages/Beans'
 import Logger from '../utils/Logger'
 import HttpInfos from './HttpInfos'
-import { hilog } from '@kit.PerformanceAnalysisKit'
+import PictureBeans from './PictureBeans'
 
 
 class NetworkApi {
@@ -179,6 +179,41 @@ class NetworkApi {
 
           let result: Array<Pager> = filterBean(resultBean)
           resolve(result)
+        }
+        if (error) {
+          reject(error)
+        }
+      })
+    })
+  }
+
+  async getGirls() {
+    return new Promise<Array<string>>((resolve, reject) => {
+
+      let request = http.createHttp();
+      let options = {
+        method: http.RequestMethod.GET,
+        header: { 'Content-Type': 'application/json' },
+        readTimeout: HttpInfos.READ_TIMEOUT,
+        connectTimeout: HttpInfos.CONNECT_TIMEOUT
+      } as http.HttpRequestOptions;
+
+      let urlss: string = HttpInfos.PictureGirls
+
+      request.request(urlss, options, (error, response) => {
+        if (response) {
+
+          let resultBean: PictureBeans = JSON.parse((response.result as string))
+
+          let result: Array<string> = resultBean.imgurls
+
+          let regp: RegExp = new RegExp(" ", 'g')
+
+          let newResult: Array<string> = result.map(item => {
+            return item.replace(regp, "%20")
+          })
+
+          resolve(newResult)
         }
         if (error) {
           reject(error)

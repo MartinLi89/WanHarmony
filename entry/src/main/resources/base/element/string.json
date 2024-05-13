@@ -15,7 +15,14 @@
     {
       "name": "app_name",
       "value": "WanHarmony"
+    },
+    {
+      "name": "EntryPictureAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryPictureAbility_label",
+      "value": "label"
     }
-
   ]
 }

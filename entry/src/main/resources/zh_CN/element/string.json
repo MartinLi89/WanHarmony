@@ -11,6 +11,18 @@
     {
       "name": "EntryAbility_label",
       "value": "wan"
+    },
+    {
+      "name": "app_name",
+      "value": "WanHarmony"
+    },
+    {
+      "name": "EntryPictureAbility_desc",
+      "value": "妹子api"
+    },
+    {
+      "name": "EntryPictureAbility_label",
+      "value": "妹子api"
     }
   ]
 }

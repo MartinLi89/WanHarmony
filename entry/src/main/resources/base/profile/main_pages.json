@@ -3,6 +3,7 @@
     "pages/Index",
     "pages/minepages/PageLoginAccount",
     "pages/PageArticalDetail",
-    "pages/commons/PageDemoMeasure"
+    "pages/commons/PageDemoMeasure",
+    "pages/PageEntryPictureAbilityIntex"
   ]
 }

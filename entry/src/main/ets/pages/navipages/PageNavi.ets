@@ -2,6 +2,7 @@ import NetworkApi from '../../networks/NetworkApi';
 import Logger from '../../utils/Logger';
 import { Navi, Pager } from '../homepages/Beans';
 import { promptAction, router } from '@kit.ArkUI';
+import CommonValues from '../commons/CommonValues';
 
 @Component
 struct PageNavi {
@@ -26,6 +27,7 @@ struct PageNavi {
 
 
         List() {
+          //左侧布局
           ForEach(this.mNaviList, (item: Navi) => {
 
             ListItem() {
@@ -41,6 +43,7 @@ struct PageNavi {
         }.width("26%")
 
         Line()
+        //右侧布局
         Flex({ wrap: FlexWrap.Wrap, direction: FlexDirection.Row }) {
 
           ForEach(this.mArticals, (item: Pager) => {
@@ -52,18 +55,24 @@ struct PageNavi {
               .margin(4)
               .backgroundColor(this.getRandomColor())
               .borderRadius(4)
-              .onClick(()=>{
-                promptAction.showToast({ message: item.link })
+              .onClick(() => {
+                if (item.link === CommonValues.LOCAL_PAGE) {
 
-                //打开对应的资源文章
-                router.pushUrl({
-                  url: "pages/PageArticalDetail",
-                  params: {
-                    linkUrl:item.link,
-                    title:"导航推荐"
+                  getContext().eventHub.emit(CommonValues.LOCAL_PAGE)
 
-                  }
-                })
+                } else {
+                  //打开对应的资源文章
+                  router.pushUrl({
+                    url: "pages/PageArticalDetail",
+                    params: {
+                      linkUrl: item.link,
+                      title: "导航推荐"
+
+                    }
+                  })
+
+                }
+
 
               })
 
@@ -101,7 +110,18 @@ struct PageNavi {
     try {
 
       let result: Array<Navi> = await NetworkApi.getInstance().getNavi()
+      let currentFirst = new Navi()
+      currentFirst.name = '随机妹子图'
 
+      let localPage = new Pager()
+
+
+      localPage.title = "随机妹子图"
+      localPage.link = CommonValues.LOCAL_PAGE
+      currentFirst.articles = new Array<Pager>()
+      currentFirst.articles.unshift(localPage)
+
+      result.unshift(currentFirst)
       this.mNaviList = result
 
 

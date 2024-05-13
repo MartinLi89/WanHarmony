@@ -29,7 +29,7 @@ export class HomeItem implements HomeItemInterface {
 @Entry
 @Component
 struct Index {
-  @State mCurrentIndex: number = 3
+  @State mCurrentIndex: number = 2
   @StorageLink("mLoginStatus") mLoginStatus: boolean = false
   private mController: TabsController = new TabsController()
   private mHomeList: Array<HomeItemInterface> = [
@@ -96,6 +96,7 @@ struct Index {
       .barMode(BarMode.Fixed)
       .barWidth("100%")
       .barHeight(tabBarHeight)
+      .barPosition(BarPosition.End)
       .animationDuration(0)
       .onChange((index: number) => {
         this.mCurrentIndex = index
@@ -109,7 +110,6 @@ struct Index {
   }
 
   ddddd: number[] = [0]
-
   test: number[] = [1, 2, 3, 55, 6, 76, 7, 7, 56, 4, 3, 3, 6, 7, 78, 64, 0]
 
   aboutToAppear(): void {
@@ -125,13 +125,11 @@ struct Index {
    * @returns
    */
   aaaaaa(test: number[]): number[] {
-    if (test=== null) {
+    if (test === null) {
       return test
 
 
     }
-
-
 
 
     let temp: number

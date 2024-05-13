@@ -3,9 +3,6 @@ export default class HttpInfos {
    *  服务器地址
    */
   static readonly SERVER: string = 'https://www.wanandroid.com';
-
-
-
   /**
    * {
    "data": [
@@ -44,14 +41,15 @@ export default class HttpInfos {
    "errorMsg": ""
    }
    */
-  static readonly BANNER: string = this.SERVER+ "/banner/json"
-
-
-  static readonly ARTICLE: string = this.SERVER+ "/article/list/0/json"
-
-  static readonly TREE: string = this.SERVER+ "/tree/json"
-  static readonly NAVI: string = this.SERVER+ "/navi/json"
-  static readonly FRASH_PROJECTS: string = this.SERVER+ "/article/listproject/0/json"
+  static readonly BANNER: string = this.SERVER + "/banner/json"
+  static readonly ARTICLE: string = this.SERVER + "/article/list/0/json"
+  static readonly TREE: string = this.SERVER + "/tree/json"
+  static readonly NAVI: string = this.SERVER + "/navi/json"
+  static readonly FRASH_PROJECTS: string = this.SERVER + "/article/listproject/0/json"
+  //picture server
+  static readonly PictureSERVER: string = 'https://imgapi.cn';
+  static readonly PictureGirls: string = this.PictureSERVER + "/cos.php?return=jsonpro"
+  // static readonly PictureGirls: string = "https://imgapi.cn/loading.php?return=jsonpro"
   /**
    * 成功code
    */
@@ -61,8 +59,4 @@ export default class HttpInfos {
    */
   static readonly CONNECT_TIMEOUT: number = 50000;
   static readonly READ_TIMEOUT: number = 50000;
-
-
-
-
 }
