@@ -2,6 +2,7 @@
   "src": [
     "pages/Index",
     "pages/minepages/PageLoginAccount",
-    "pages/PageArticalDetail"
+    "pages/PageArticalDetail",
+    "pages/commons/PageDemoMeasure"
   ]
 }
