@@ -20,6 +20,7 @@ export default class EntryAbility extends UIAbility {
     Logger.info( 'lsyyy','Ability onWindowStageCreate');
 
     windowStage.loadContent('pages/Index', (err) => {
+    // windowStage.loadContent('pages/commons/PageDemoMeasure', (err) => {
       if (err.code) {
         Logger.error( 'lsyyy', 'Failed to load the content. Cause: %{public}s', JSON.stringify(err) ?? '');
         return;

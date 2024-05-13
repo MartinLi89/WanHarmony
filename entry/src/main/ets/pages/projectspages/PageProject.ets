@@ -1,7 +1,7 @@
 import NetworkApi from '../../networks/NetworkApi';
 import Logger from '../../utils/Logger';
 import { Pager } from '../homepages/Beans';
-import { promptAction } from '@kit.ArkUI';
+import { curves, promptAction } from '@kit.ArkUI';
 import inspector from '@ohos.arkui.inspector'
 
 @Entry
@@ -12,31 +12,15 @@ struct PageProject {
 
   build() {
     Column() {
-      List() {
-        ForEach(this.mPapgers, (item: Pager) => {
-          ListItem() {
-            Column() {
 
-
-              Text(item.title).width("100%").height(60)
-              Image(item.envelopePic).width("100%")
-
-              Text(item.desc).width("100%").height(60)
-
-            }
-          }
-
-        })
-      }.divider({
-        strokeWidth: 2,
-        color: "#ff616e61"
-      })
+      DemoStack({ mPapgers: this.mPapgers })
 
     }
     .width('100%')
     .height('100%')
     .backgroundColor('#E67C92')
     .justifyContent(FlexAlign.Center)
+    .clip(true)
 
   }
 
@@ -99,6 +83,157 @@ struct PageProject {
     }
 
 
+  }
+}
+
+@Component
+struct DemoStack {
+  @Link mPapgers: Array<Pager>
+  @State mPoint: number[] = [0, 0]
+  @State flag: boolean = false
+  @State positionX: number = 0;
+  @State positionY: number = 0;
+  diameter: number = 50;
+
+  build() {
+
+
+    Stack() {
+
+
+      if (this.mPapgers) {
+
+        ForEach(this.mPapgers, (item: Pager, index: number) => {
+
+          MyDragCard({
+            mPager: item,
+            // mPoint: this.mPoint,
+            flag: index === this.mPapgers.length - 1,
+            positionX: this.positionX,
+            positionY: this.positionY,
+            index: index
+          })
+
+        })
+
+        // List() {
+        //   ForEach(this.mPapgers, (item: Pager, index: number) => {
+        //     ListItem() {
+        //
+        //       MyDragCard({
+        //         mPager: item,
+        //         mPoint: this.mPoint,
+        //         flag: index === this.mPapgers.length-1,
+        //         positionX: this.positionX,
+        //         positionY: this.positionY,
+        //         index: index
+        //       })
+        //     }
+        //   })
+        // }
+
+      }
+
+    }.width("100%").height("100%")
+    .onAreaChange((old, newValue) => {
+      if (this.mPoint[0] === 0) {
+        this.mPoint[0] = newValue.width as number / 2 * 0.3
+        this.mPoint[1] = newValue.height as number / 2 * 0.3
+        this.positionX = this.mPoint[0];
+        this.positionY = this.mPoint[1];
+      }
+    })
+    .clip(false) //如果超出父组件的范围时，希望子组件完整的显示，那么可以设置父组件的clip属性为false，使父组件不对子组件产生裁剪
+
+  }
+
+  @State translateX: number = 0
+
+  private jumpWithSpeed(speed: number) {
+    this.translateX = -1;
+    animateTo({ duration: 2000, curve: curves.springCurve(speed, 1, 1, 1.2) }, () => {
+      // 以指定初速度进行x方向的平移的弹簧动画
+      this.translateX = 0;
+    })
+  }
+}
+
+
+@Component
+struct MyDragCard {
+  mPager: Pager = new Pager()
+  mPoint: number[] = [0, 0]
+  flag: boolean = false
+  @Prop positionX: number
+  @Prop positionY: number
+  diameter: number = 50;
+  index: number = 0
+
+  build() {
+    Stack({ alignContent: Alignment.Center }) {
+
+      Image(this.mPager?.envelopePic)
+        .width("100%")
+        .height("100%")
+        .borderRadius(20)
+      Column() {
+        Text(this.mPager?.title)
+          .width("100%")
+          .height(60)
+          .textAlign(TextAlign.Center)
+          .backgroundColor(Color.Yellow)
+          .borderRadius({ topLeft: 20, topRight: 20 })
+
+        Text(this.mPager?.desc).width("100%").height(60)
+          .backgroundColor(Color.Yellow)
+          .borderRadius({ bottomLeft: 20, bottomRight: 20 })
+      }.width("100%")
+      .height("100%")
+      .justifyContent(FlexAlign.SpaceBetween)
+      .borderRadius(20)
+
+    }
+    .width(this.flag ? "60%" : "70%")
+    .height(this.flag ? "60%" : "70%")
+    .backgroundColor(Color.White)
+    .borderRadius(20)
+    .borderWidth(2)
+    .borderColor("#00ff00")
+    .position({ x: this.positionX, y: this.positionY }) //卡片当前位置
+
+    .onTouch((event: TouchEvent) => {
+      if (event.type === TouchType.Move) {
+        // 跟手过程，使用responsiveSpringMotion曲线
+        animateTo({ curve: curves.responsiveSpringMotion() }, () => {
+
+          this.positionX = event.touches[0].windowX ;
+          this.positionY = event.touches[0].windowY  ;
+        })
+
+      } else if (event.type === TouchType.Up) {
+        // 离手时，使用springMotion曲线，卡片复归
+        animateTo({ curve: curves.springMotion() }, () => {
+          this.positionX = this.mPoint[0];
+          this.positionY = this.mPoint[1];
+        })
+      }
+    })
+    .clip(true)
+    .onAreaChange((old, newValue) => {
+      if (this.mPoint[0] === 0) {
+        if (this.flag) {
+          this.mPoint[0] = newValue.width as number / 2 * 0.4
+          this.mPoint[1] = newValue.height as number / 2 * 0.4
+
+        } else {
+          this.mPoint[0] = newValue.width as number / 2 * 0.3
+          this.mPoint[1] = newValue.height as number / 2 * 0.3
+        }
+        this.positionX = this.mPoint[0];
+        this.positionY = this.mPoint[1];
+
+      }
+    })
   }
 }
 

@@ -1,82 +1,53 @@
 import inspector from '@ohos.arkui.inspector'
 import { promptAction } from '@kit.ArkUI';
-
+import curves from '@ohos.curves';
 @Entry
 @Component
 struct PageDemoMeasure {
-  @State message: string = 'Hello World';
+  @State positionX: number = 100;
+  @State positionY: number = 100;
+  diameter: number = 50;
 
   build() {
-
     Column() {
+      Row() {
+        Circle({ width: this.diameter, height: this.diameter })
+          .fill(Color.Blue)
+          .position({ x: this.positionX, y: this.positionY })
+          .onTouch((event: TouchEvent) => {
+            if (event.type === TouchType.Move) {
+              // 跟手过程，使用responsiveSpringMotion曲线
+              animateTo({ curve: curves.responsiveSpringMotion() }, () => {
+                // 减去半径，以使球的中心运动到手指位置
+                this.positionX = event.touches[0].screenX - this.diameter / 2;
+                this.positionY = event.touches[0].screenY - this.diameter / 2;
+                console.info(`move, animateTo x:${this.positionX}, y:${this.positionY}`);
+              })
+            } else if (event.type === TouchType.Up) {
+              // 离手时，使用springMotion曲线
+              animateTo({ curve: curves.springMotion() }, () => {
+                this.positionX = 100;
+                this.positionY = 100;
+                console.info(`touchUp, animateTo x:100, y:100`);
+              })
+            }
+          })
+      }
+      .width("100%").height("80%")
+      .clip(true) // 如果球超出父组件范围，使球不可见
+      .backgroundColor(Color.Orange)
 
-      CustomLayout({ builder: this.ColumnChildren })
+      Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Start, justifyContent: FlexAlign.Center }) {
+        Text("拖动小球").fontSize(16)
+      }
+      .width("100%")
 
-    }
-    .width('100%')
-    .height('100%').justifyContent(FlexAlign.Start).alignItems(HorizontalAlign.Start)
-
-  }
-
-  @Builder
-  ColumnChildren() {
-    ForEach([1, 2, 3], (index: number) => { //暂不支持lazyForEach的写法
-      Text('S' + index)
-        .fontSize(30)
-        .width(50)
-        .height(50)
-        .borderWidth(2)
-      // .backgroundColor("#00ff00")
-      // .offset({ x: 10, y: 20 })
-    })
-  }
-
-  // onMeasure自定义组件确定尺寸时，将该自定义组件的节点信息和尺寸范围通过onMeasureSize传递给该开发者
-  // 不允许在onMeasureSize函数中改变状态变量。
-  // onMeasureSize(selfLayoutInfo: GeometryInfo, children: Measurable[], constraint: ConstraintSizeOptions): SizeResult {
-  //
-  //   return {width:500,height:2000}
-  // }
-
-  ///onLayout
-  // onPlaceChildren(selfLayoutInfo: GeometryInfo, children: Layoutable[], constraint: ConstraintSizeOptions): void {
-  // }
-
-
-  //组件布局绘制完成回调的句柄，包含了申请句柄时的首次查询结果。
-  listener: inspector.ComponentObserver = inspector.createComponentObserver('IMAGE_ID')
-
-  aboutToAppear(): void {
-
-
-    let onLayoutComplete: () => void = (): void => {
-      // do something here
-      console.log("lssyyy onLayoutComplete")
-    }
-    let onDrawComplete: () => void = (): void => {
-      // do something here
-      console.log("lssyyy onDrawComplete")
-    }
-    let offLayoutComplete: () => void = (): void => {
-      // do something here
-      console.log("lssyyy offLayoutComplete")
-    }
-    let offDrawComplete: () => void = (): void => {
-      // do something here
-      console.log("lssyyy offDrawComplete")
-    }
-    let FuncLayout = onLayoutComplete // bind current js instance
-    let FuncDraw = onDrawComplete // bind current js instance
-    let OffFuncLayout = offLayoutComplete // bind current js instance
-    let OffFuncDraw = offDrawComplete // bind current js instance
-
-    this.listener.on('layout', FuncLayout)
-    this.listener.on('draw', FuncDraw)
-
-    // 通过句柄向对应的查询条件取消注册回调，由开发者自行决定在何时调用。
-    // this.listener.off('layout', OffFuncLayout)
-    // this.listener.off('draw', OffFuncDraw)
-
+      Row() {
+        Text('点击位置: [x: ' + Math.round(this.positionX) + ', y:' + Math.round(this.positionY) + ']').fontSize(16)
+      }
+      .padding(10)
+      .width("100%")
+    }.height('100%').width('100%')
   }
 }
 

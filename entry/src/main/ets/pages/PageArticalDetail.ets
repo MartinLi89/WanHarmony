@@ -32,7 +32,7 @@ struct PageArticalDetail {
 
     Column() {
 
-      CommonTitle({mTitle:this.mTitle})
+      CommonTitle({ mTitle: this.mTitle })
       // 组件创建时，加载www.example.com
       Web({ src: this.linkUrl, controller: this.webviewController })
 

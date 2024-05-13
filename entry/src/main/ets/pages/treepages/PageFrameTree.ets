@@ -131,7 +131,8 @@ export struct PageFrameTree {
       List() {
         ForEach(this.mArticalTree.articleList, (item: Pager) => {
           ListItem() {
-            Text(item.title).maxLines(1).width("100%").onClick(()=>{
+            Text(item.title).maxLines(1).width("100%")
+              .onClick(()=>{
 
               //打开对应的资源文章
               router.pushUrl({

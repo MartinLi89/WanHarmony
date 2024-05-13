@@ -107,6 +107,56 @@ struct Index {
 
     }.width('100%').height("100%")
   }
+
+  ddddd: number[] = [0]
+
+  test: number[] = [1, 2, 3, 55, 6, 76, 7, 7, 56, 4, 3, 3, 6, 7, 78, 64, 0]
+
+  aboutToAppear(): void {
+
+
+    let bbbb = this.aaaaaa(this.ddddd)
+    console.log("ddfffff" + JSON.stringify(bbbb))
+  }
+
+  /**
+   * 从小到大排序
+   * @param test
+   * @returns
+   */
+  aaaaaa(test: number[]): number[] {
+    if (test=== null) {
+      return test
+
+
+    }
+
+
+
+
+    let temp: number
+
+    //比较次数
+    for (let i = 0; i < test.length; i++) {
+
+
+      //第几次比较
+      for (let j = 0; j < test.length - i - 1; j++) {
+        // let current = test[j]
+        // let next = test[j+1]
+
+        if (test[j] > test[j+1]) {
+          temp = test[j+1]
+          test[j+1] = test[j]
+          test[j] = temp
+        }
+      }
+    }
+
+
+    return test
+
+  }
 }
 
 
