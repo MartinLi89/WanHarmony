@@ -27,7 +27,6 @@ export default class EntryAbility extends UIAbility {
 
   onDestroy(): void {
     Logger.info('lsyyy', 'Ability onDestroy');
-    getContext().eventHub.off(CommonValues.LOCAL_PAGE)
   }
 
   onWindowStageCreate(windowStage: window.WindowStage): void {

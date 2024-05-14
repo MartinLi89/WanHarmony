@@ -13,17 +13,17 @@ export struct PageFrameTree {
   @State mBindSheet: boolean = false
 
   @Builder
-  getTreeItemLayout(currentList: Array<Tree>, isFirst: boolean) {
+  getTreeItemLayout(treeUI:TreeListInterface ) {
 
-    if (currentList) {
+    if (treeUI) {
       List() {
-        ForEach(currentList, (item: Tree) => {
+        ForEach(treeUI.currentList, (item: Tree) => {
           ListItem() {
 
             Text(item.name)
               .width("100%")
               .height(40)
-              .backgroundColor(isFirst ? "#ff4e79e6" : "#ffedd36f")
+              .backgroundColor(treeUI.isFirst ? "#ff4e79e6" : "#ffedd36f")
               .maxLines(2)
               .onClick(() => {
                 this.mCurrentSelectItem = item
@@ -67,7 +67,7 @@ export struct PageFrameTree {
         //左边的列表
         if (this.mTreeList && this.mTreeList.length > 0) {
 
-          this.getTreeItemLayout(this.mTreeList, true)
+          this.getTreeItemLayout({currentList:this.mTreeList, isFirst:true})
 
         }
         //右侧选中的列表
@@ -75,37 +75,38 @@ export struct PageFrameTree {
           Line().width(0.5).height('100%').backgroundColor("#ff707570")
 
           // this.getTreeItemLayout(this.currentSelectItem.children, false)
+          this.getTreeItemLayout({currentList:this.mCurrentSelectItem.children,isFirst: false})
 
 
-          if (this.mCurrentSelectItem.children) {
-            List() {
-              ForEach(this.mCurrentSelectItem.children, (item: Tree) => {
-                ListItem() {
-
-                  Text(item.name)
-                    .width("100%")
-                    .height(40)
-                    .backgroundColor(false ? "#ff4e79e6" : "#ffedd36f")
-                    .maxLines(2)
-                    .onClick(() => {
-
-                      this.mMessage += item.name as string
-                      this.mMessage += (item.articleList ? item.articleList.length : 0)
-                      this.mBindSheet = true
-                      this.mArticalTree = item
-
-
-                    })
-                }
-              })
-            }.layoutWeight(1)
-            .height("100%")
-            .divider({
-              strokeWidth: 2,
-              color: "#ff9a8733"
-
-            })
-          }
+          // if (this.mCurrentSelectItem.children) {
+          //   List() {
+          //     ForEach(this.mCurrentSelectItem.children, (item: Tree) => {
+          //       ListItem() {
+          //
+          //         Text(item.name)
+          //           .width("100%")
+          //           .height(40)
+          //           .backgroundColor(false ? "#ff4e79e6" : "#ffedd36f")
+          //           .maxLines(2)
+          //           .onClick(() => {
+          //
+          //             this.mMessage += item.name as string
+          //             this.mMessage += (item.articleList ? item.articleList.length : 0)
+          //             this.mBindSheet = true
+          //             this.mArticalTree = item
+          //
+          //
+          //           })
+          //       }
+          //     })
+          //   }.layoutWeight(1)
+          //   .height("100%")
+          //   .divider({
+          //     strokeWidth: 2,
+          //     color: "#ff9a8733"
+          //
+          //   })
+          // }
         }
 
 
@@ -127,29 +128,29 @@ export struct PageFrameTree {
     // 坑点 bindSheet的内容最外层需要用原生组件才可以
     Column() {
 
-      Text(this.mArticalTree.name).maxLines(1).width("100%").textAlign(TextAlign.Center).margin({bottom:10})
+      Text(this.mArticalTree.name).maxLines(1).width("100%").textAlign(TextAlign.Center).margin({ bottom: 10 })
       List() {
         ForEach(this.mArticalTree.articleList, (item: Pager) => {
           ListItem() {
             Text(item.title).maxLines(1).width("100%")
-              .onClick(()=>{
+              .onClick(() => {
 
-              //打开对应的资源文章
-              router.pushUrl({
-                url: "pages/PageArticalDetail",
-                params: {
-                  linkUrl:item.link
+                //打开对应的资源文章
+                router.pushUrl({
+                  url: "pages/PageArticalDetail",
+                  params: {
+                    linkUrl: item.link
 
-                }
+                  }
+                })
+
               })
-
-            })
 
           }
         })
 
 
-      }.divider({strokeWidth:2,color:"#ff737873"})
+      }.divider({ strokeWidth: 2, color: "#ff737873" })
 
     }.width("100%").height("100%")
 
@@ -201,4 +202,10 @@ export struct PageFrameTree {
 
     return false
   }
+}
+
+interface TreeListInterface {
+
+  currentList: Array<Tree>,
+  isFirst: boolean
 }
