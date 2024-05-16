@@ -4,6 +4,10 @@ import CommonValues from '../pages/commons/CommonValues';
 import Logger from '../utils/Logger';
 
 export default class EntryAbility extends UIAbility {
+  onBackPressed(): boolean {
+    return true
+  }
+
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
 
 

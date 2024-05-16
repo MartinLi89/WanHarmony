@@ -4,6 +4,7 @@
     "pages/minepages/PageLoginAccount",
     "pages/PageArticalDetail",
     "pages/commons/PageDemoMeasure",
-    "pages/PageEntryPictureAbilityIntex"
+    "pages/PageEntryPictureAbilityIntex",
+    "pages/mei_tuan_demo/PageMeiTuanDemo"
   ]
 }

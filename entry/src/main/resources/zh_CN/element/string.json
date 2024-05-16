@@ -23,6 +23,14 @@
     {
       "name": "EntryPictureAbility_label",
       "value": "妹子api"
+    },
+    {
+      "name": "MeiTuanDemoAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "MeiTuanDemoAbility_label",
+      "value": "label"
     }
   ]
 }

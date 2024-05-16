@@ -30,7 +30,7 @@ export class HomeItem implements HomeItemInterface {
 @Entry
 @Component
 struct Index {
-  @State mCurrentIndex: number = 2
+  @State mCurrentIndex: number = 4
   @StorageLink("mLoginStatus") mLoginStatus: boolean = false
   private mController: TabsController = new TabsController()
   private mHomeList: Array<HomeItemInterface> = [

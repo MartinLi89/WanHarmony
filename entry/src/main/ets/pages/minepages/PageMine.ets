@@ -1,4 +1,5 @@
 import { router } from '@kit.ArkUI';
+import { common, UIAbility, Want } from '@kit.AbilityKit';
 
 @Preview
 @Component
@@ -22,6 +23,27 @@ export default struct PageMine {
       })
     }
 
+  }
+
+  async jump2MeiTUanDemo() {
+
+    try {
+
+
+      let want: Want = {
+        deviceId: "",
+        bundleName: 'com.example.wanharmony',
+
+        abilityName: "MeiTuanDemoAbility"
+      };
+
+      (getContext(this) as common.UIAbilityContext).startAbility(want)
+
+
+      console.info(`explicit start ability succeed`);
+    } catch (error) {
+      console.info(`explicit start ability failed with ${error.code}`);
+    }
   }
 
   build() {
@@ -51,6 +73,16 @@ export default struct PageMine {
           }
 
         }.layoutWeight(1).width("100%")
+
+        Button("美团Demo")
+          .width(180)
+          .height(40)
+          .margin({ bottom: 10 })
+          .type(ButtonType.Normal)
+          .border({
+            radius: 5
+          })
+          .onClick(() => this.jump2MeiTUanDemo())
 
 
         Button(this.mLoginStatus ? "退出登录" : "登录")

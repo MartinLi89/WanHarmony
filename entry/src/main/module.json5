@@ -46,6 +46,15 @@
         "label": "$string:EntryPictureAbility_label",
         "startWindowIcon": "$media:startIcon",
         "startWindowBackground": "$color:start_window_background"
+      },
+      {
+        "name": "MeiTuanDemoAbility",
+        "srcEntry": "./ets/meituandemoability/MeiTuanDemoAbility.ets",
+        "description": "$string:MeiTuanDemoAbility_desc",
+        "icon": "$media:layered_image",
+        "label": "$string:MeiTuanDemoAbility_label",
+        "startWindowIcon": "$media:startIcon",
+        "startWindowBackground": "$color:start_window_background"
       }
     ]
   }
