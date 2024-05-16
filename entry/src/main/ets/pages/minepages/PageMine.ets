@@ -46,6 +46,27 @@ export default struct PageMine {
     }
   }
 
+  async jump2Keyboard() {
+
+    try {
+
+
+      let want: Want = {
+        deviceId: "",
+        bundleName: 'com.example.wanharmony',
+
+        abilityName: "KeyboardDemo"
+      };
+
+      (getContext(this) as common.UIAbilityContext).startAbility(want)
+
+
+      console.info(`explicit start ability succeed`);
+    } catch (error) {
+      console.info(`explicit start ability failed with ${error.code}`);
+    }
+  }
+
   build() {
     Column() {
 
@@ -83,6 +104,16 @@ export default struct PageMine {
             radius: 5
           })
           .onClick(() => this.jump2MeiTUanDemo())
+
+        Button("输入框demo")
+          .width(180)
+          .height(40)
+          .margin({ bottom: 10 })
+          .type(ButtonType.Normal)
+          .border({
+            radius: 5
+          })
+          .onClick(() => this.jump2Keyboard())
 
 
         Button(this.mLoginStatus ? "退出登录" : "登录")

@@ -55,6 +55,15 @@
         "label": "$string:MeiTuanDemoAbility_label",
         "startWindowIcon": "$media:startIcon",
         "startWindowBackground": "$color:start_window_background"
+      },
+      {
+        "name": "KeyboardDemo",
+        "srcEntry": "./ets/keyboarddemo/KeyboardDemo.ets",
+        "description": "$string:KeyboardDemo_desc",
+        "icon": "$media:layered_image",
+        "label": "$string:KeyboardDemo_label",
+        "startWindowIcon": "$media:startIcon",
+        "startWindowBackground": "$color:start_window_background"
       }
     ]
   }

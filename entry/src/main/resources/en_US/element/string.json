@@ -31,6 +31,14 @@
     {
       "name": "MeiTuanDemoAbility_label",
       "value": "label"
+    },
+    {
+      "name": "KeyboardDemo_desc",
+      "value": "description"
+    },
+    {
+      "name": "KeyboardDemo_label",
+      "value": "label"
     }
   ]
 }
