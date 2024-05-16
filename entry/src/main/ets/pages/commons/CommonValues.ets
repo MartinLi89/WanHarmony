@@ -4,7 +4,6 @@ export default class CommonValues {
 
 
 
-/*
 
 class TextTS {
   a: string = "1"
@@ -45,10 +44,10 @@ let test12: TextTS = {
   b: "2",
   c: "3"
 }
-testReadonly.a = "f" //报错，说明只读
+// testReadonly.a = "f" //报错，说明只读
 test12.a = "f"
 
-//3 鸿蒙中不可用，会报错
+//3
 // Pick<Type,Keys>  新定义 一个类型 从Type类型中，选择需要的keys，构成新的类型
 
 interface TextInterface {
@@ -57,15 +56,17 @@ interface TextInterface {
   c: string
 
 }
-type PickObj = Pick<TextInterface, 'a'|'b'>
 
-//4 鸿蒙中不可以，会报错 新定义 一个类型属性键为Keys，属性类型为Type，构成新的类型
+//鸿蒙中不可用，会报错
+// type PickObj =  Pick<TextInterface, 'a'|'b'>
+//这样写不报错
+interface PickObj extends Pick<TextInterface, 'a' | 'b'> {}
+let test111 :PickObj={a :"1",b:"1"}
 
 
-type MyRecordObj = Record<'persons', number>
-
+//4  新定义 一个类型属性键为Keys，属性类型为Type，构成新的类型
+type MyRecordObj = Record<"aaaa", number>
 let value: MyRecordObj = {
-  persons:1
+  "aaaa": 1
 
 }
-*/

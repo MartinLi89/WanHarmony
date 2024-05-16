@@ -1,3 +1,4 @@
+import Md5Utils from '../utils/Md5Utils';
 import PageHomeTabLayout from './homepages/PageHomeTabLayout';
 import PageMine from './minepages/PageMine'
 import { PageNavi } from './navipages/PageNavi';
@@ -117,6 +118,20 @@ struct Index {
 
     let bbbb = this.aaaaaa(this.ddddd)
     console.log("ddfffff" + JSON.stringify(bbbb))
+
+
+    Md5Utils.getInstance().getMd5("adbbb你").then(result => {
+      console.log("md5String==>" + result)
+    })
+
+    Md5Utils.getInstance().getMd5("adbbb你").then(result => {
+      console.log("md5String==>" + result)
+    })
+
+    Md5Utils.getInstance().getMd5("adbbb你").then(result => {
+      console.log("md5String==>" + result)
+    })
+
   }
 
   /**
